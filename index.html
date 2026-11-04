@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>김한림 | 포트폴리오 & 아카이브 (Student Portfolio)</title>
+  <meta name="description" content="과제, 프로젝트, 이력서 및 학습 자료를 체계적으로 정리한 대학생 개인 아카이브 포트폴리오 웹사이트입니다.">
+  <meta name="keywords" content="대학생 포트폴리오, 컴퓨터공학, 과제 아카이브, 프로젝트, 이력서, CV">
+  <meta name="author" content="김한림">
+
+  <!-- Open Graph / SNS 공유 메타 태그 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="김한림 | 개인 포트폴리오 & 아카이브">
+  <meta property="og:description" content="과제, 프로젝트, 이력서 및 학습 자료를 한눈에 볼 수 있는 개인 랜딩 페이지입니다.">
+  <meta property="og:image" content="assets/avatar.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+              950: '#172554',
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- 커스텀 스타일시트 (자체 내장 - 외부 파일 없이 단일 파일로 동작) -->
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+    :root {
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    }
+
+    html {
+      font-family: var(--font-sans);
+      scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
+    }
+
+    /* 다크모드 및 라이트모드 부드러운 전환 */
+    body {
+      transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 커스텀 스크롤바 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.5);
+      border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.8);
+    }
+
+    .dark ::-webkit-scrollbar-thumb {
+      background: rgba(71, 85, 105, 0.6);
+    }
+
+    .dark ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.9);
+    }
+
+    /* 글래스모피즘 효과 */
+    .glass {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .dark .glass {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* 카드 및 박스 호버 그림자 */
+    .card-hover {
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-hover:hover {
+      transform: translateY(-4px);
+    }
+
+    /* 배경 그라데이션 오로라 효과 */
+    .aurora-bg {
+      background: radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+                  radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
+                  radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+    }
+
+    .dark .aurora-bg {
+      background: radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+    }
+
+    /* 애니메이션 */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* 인쇄용 (Resume 인쇄 시 깔끔하게 출력) */
+    @media print {
+      nav, footer, #theme-toggle, .no-print {
+        display: none !important;
+      }
+      body {
+        background: white !important;
+        color: black !important;
+      }
+    }
+  </style>
+
+  <!-- 다크모드 깜빡임 방지 스크립트 (즉시 실행) -->
+  <script>
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white aurora-bg">
+
+  <!-- ==========================================================================
+       상단 네비게이션 바 (Header & Nav)
+       ========================================================================== -->
+  <header class="sticky top-0 z-40 glass border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- 로고 / 이름 -->
+      <a href="#profile" class="flex items-center gap-2.5 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+          🦅
+        </div>
+        <div>
+          <span class="font-bold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">김한림</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400 block -mt-1 font-normal">Student Archive</span>
+        </div>
+      </a>
+
+      <!-- 데스크톱 네비게이션 링크 -->
+      <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+        <a href="#profile" class="nav-link px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/50 transition">
+          1. Profile
+        </a>
+        <a href="#projects" class="nav-link px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/50 transition">
+          2. Projects & Materials
+        </a>
+        <a href="#experience" class="nav-link px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/50 transition">
+          3. Experience & Skills
+        </a>
+        <a href="#contact" class="nav-link px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/50 transition">
+          4. Contact
+        </a>
+      </nav>
+
+      <!-- 우측 컨트롤 (이력서 모달 & 테마 토글 & 모바일 메뉴 버튼) -->
+      <div class="flex items-center gap-2">
+        
+        <!-- 이력서 미리보기 버튼 (데스크톱) -->
+        <button type="button" class="open-resume-modal hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200/80 dark:border-blue-900 transition">
+          <i data-lucide="file-user" class="w-3.5 h-3.5"></i>
+          <span>이력서 (CV)</span>
+        </button>
+
+        <!-- 다크/라이트 모드 토글 버튼 -->
+        <button type="button" class="theme-toggle-btn p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" aria-label="테마 전환">
+          <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-amber-400"></i>
+          <i data-lucide="moon" class="w-5 h-5 block dark:hidden text-slate-600"></i>
+        </button>
+
+        <!-- 모바일 햄버거 메뉴 버튼 -->
+        <button type="button" id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" aria-label="메뉴 열기">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- 모바일 드롭다운 메뉴 -->
+    <div id="mobile-menu" class="hidden md:hidden flex-col border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 px-4 pt-2 pb-4 space-y-1">
+      <a href="#profile" class="mobile-nav-link block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">
+        1. Profile (자기소개)
+      </a>
+      <a href="#projects" class="mobile-nav-link block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">
+        2. Projects & Materials (과제/자료)
+      </a>
+      <a href="#experience" class="mobile-nav-link block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">
+        3. Experience & Skills (이력/기술)
+      </a>
+      <a href="#contact" class="mobile-nav-link block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">
+        4. Contact (연락처)
+      </a>
+      <div class="pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+        <button type="button" class="open-resume-modal inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
+          <i data-lucide="file-user" class="w-4 h-4"></i>
+          이력서 (CV) 열람
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 콘텐츠 영역 -->
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-24">
+
+    <!-- ==========================================================================
+         1. Profile 섹션 (자기소개 및 주요 관심사)
+         ========================================================================== -->
+    <section id="profile" class="pt-4 scroll-mt-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- 프로필 아바타 & 뱃지 -->
+        <div class="lg:col-span-5 flex flex-col items-center text-center">
+          <div class="relative group">
+            <div class="w-44 h-44 sm:w-52 sm:h-52 rounded-full p-1.5 bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 shadow-xl shadow-blue-500/20 animate-float">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-full h-full object-cover rounded-full bg-slate-100 dark:bg-slate-800">
+                <defs>
+                  <linearGradient id="grad-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3B82F6"/>
+                    <stop offset="50%" stop-color="#6366F1"/>
+                    <stop offset="100%" stop-color="#8B5CF6"/>
+                  </linearGradient>
+                  <linearGradient id="grad-face" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FED7AA"/>
+                    <stop offset="100%" stop-color="#FDBA74"/>
+                  </linearGradient>
+                </defs>
+                <rect width="200" height="200" rx="100" fill="url(#grad-bg)"/>
+                <circle cx="100" cy="100" r="94" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="3"/>
+                <ellipse cx="100" cy="190" rx="60" ry="40" fill="#1E293B"/>
+                <ellipse cx="100" cy="190" rx="54" ry="34" fill="#334155"/>
+                <path d="M85 155 L100 175 L115 155 Z" fill="#FFFFFF"/>
+                <path d="M100 175 L100 195" stroke="#CBD5E1" stroke-width="2"/>
+                <rect x="88" y="125" width="24" height="28" rx="6" fill="#FDBA74"/>
+                <ellipse cx="100" cy="98" rx="42" ry="46" fill="url(#grad-face)"/>
+                <path d="M60 92 C58 60 76 46 100 46 C124 46 142 60 140 92 C134 94 126 84 120 84 C110 84 104 88 100 88 C96 88 90 84 80 84 C74 84 66 94 60 92 Z" fill="#1E293B"/>
+                <path d="M68 68 C76 56 100 52 112 58 C124 64 134 68 136 78 C128 72 118 70 108 72 C98 74 86 78 76 74 C72 72 70 70 68 68 Z" fill="#0F172A"/>
+                <rect x="72" y="90" width="22" height="16" rx="4" fill="rgba(255,255,255,0.25)" stroke="#1E293B" stroke-width="3"/>
+                <rect x="106" y="90" width="22" height="16" rx="4" fill="rgba(255,255,255,0.25)" stroke="#1E293B" stroke-width="3"/>
+                <path d="M94 98 L106 98" stroke="#1E293B" stroke-width="3"/>
+                <path d="M64 96 L72 96" stroke="#1E293B" stroke-width="2.5"/>
+                <path d="M128 96 L136 96" stroke="#1E293B" stroke-width="2.5"/>
+                <circle cx="83" cy="98" r="3" fill="#0F172A"/>
+                <circle cx="117" cy="98" r="3" fill="#0F172A"/>
+                <path d="M74 85 Q83 82 90 85" stroke="#0F172A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <path d="M110 85 Q117 82 126 85" stroke="#0F172A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <path d="M91 122 Q100 130 109 122" stroke="#EA580C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <circle cx="73" cy="114" r="5" fill="#F43F5E" opacity="0.3"/>
+                <circle cx="127" cy="114" r="5" fill="#F43F5E" opacity="0.3"/>
+              </svg>
+            </div>
+            <!-- 상태 표시 배지 -->
+            <div class="absolute bottom-2 right-4 bg-emerald-500 text-white text-xs px-2.5 py-1 rounded-full font-medium shadow-md flex items-center gap-1 border-2 border-white dark:border-slate-900">
+              <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+              인턴 및 스터디 구직 중
+            </div>
+          </div>
+
+          <!-- 소속 정보 칩 -->
+          <div class="mt-5 flex flex-wrap justify-center gap-2">
+            <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+              🎓 컴퓨터공학전공
+            </span>
+            <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+              📍 3학년 재학 중
+            </span>
+          </div>
+        </div>
+
+        <!-- 텍스트 소개 & 액션 버튼 -->
+        <div class="lg:col-span-7 space-y-5 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-xs font-semibold tracking-wide uppercase">
+            <span>Student & Junior Developer</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+            안녕하세요, <br class="hidden sm:inline">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">배움을 실천하는 개발자</span> <br>
+            김한림입니다.
+          </h1>
+
+          <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+            새로운 기술을 빠르게 습득하여 과제와 프로젝트를 통해 직접 구현하는 것을 좋아합니다. 
+            학부 과정 동안 수행한 과제, 팀 프로젝트, 학습 정리 노트를 체계적으로 기록하고 공유하기 위해 구축한 아카이브 공간입니다.
+          </p>
+
+          <!-- 관심 분야 태그 -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+            <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mr-1">관심사 :</span>
+            <span class="px-2.5 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">웹 프론트엔드</span>
+            <span class="px-2.5 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">시스템 & 네트워크</span>
+            <span class="px-2.5 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">클라우드 인프라</span>
+            <span class="px-2.5 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">오픈소스</span>
+          </div>
+
+          <!-- 액션 버튼 그룹 -->
+          <div class="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+            <button type="button" class="open-resume-modal inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-500/25 transition">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              <span>이력서 (CV) 보기 / 인쇄</span>
+            </button>
+
+            <a href="#projects" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition">
+              <i data-lucide="folder-git-2" class="w-4 h-4 text-blue-500"></i>
+              <span>자료 및 과제 둘러보기</span>
+            </a>
+
+            <a href="#contact" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition">
+              <i data-lucide="mail" class="w-4 h-4"></i>
+              <span>연락하기</span>
+            </a>
+          </div>
+
+          <!-- 빠른 요약 통계 -->
+          <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-200 dark:border-slate-800 text-center">
+            <div class="p-2">
+              <span class="block text-2xl font-bold text-slate-900 dark:text-white">6+</span>
+              <span class="text-xs text-slate-500 dark:text-slate-400">등록된 과제/프로젝트</span>
+            </div>
+            <div class="p-2">
+              <span class="block text-2xl font-bold text-slate-900 dark:text-white">3.9+</span>
+              <span class="text-xs text-slate-500 dark:text-slate-400">전공 학점 (GPA)</span>
+            </div>
+            <div class="p-2">
+              <span class="block text-2xl font-bold text-slate-900 dark:text-white">150+</span>
+              <span class="text-xs text-slate-500 dark:text-slate-400">알고리즘 문제 풀이</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         2. Projects & Materials 섹션 (과제 및 만들어진 자료 모음)
+         ========================================================================== -->
+    <section id="projects" class="scroll-mt-24">
+      <div class="space-y-6">
+        
+        <!-- 섹션 헤더 -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
+          <div>
+            <div class="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-xs font-bold tracking-wider uppercase mb-1">
+              <i data-lucide="folder-archive" class="w-4 h-4"></i>
+              <span>Archive & Works</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+              Projects & Materials
+            </h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              학부 과제, 팀 프로젝트, 스터디 자료를 링크와 함께 체계적으로 모아두었습니다. 카드를 클릭하면 상세 내용을 볼 수 있습니다.
+            </p>
+          </div>
+
+          <!-- 카테고리 필터 버튼 -->
+          <div class="flex flex-wrap gap-1.5 p-1 bg-slate-200/60 dark:bg-slate-800/80 rounded-xl self-start md:self-auto">
+            <button type="button" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white shadow-md transition" data-filter="all">
+              전체보기
+            </button>
+            <button type="button" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition" data-filter="project">
+              팀/개인 프로젝트
+            </button>
+            <button type="button" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition" data-filter="assignment">
+              전공 과제
+            </button>
+            <button type="button" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition" data-filter="study">
+              학습자료 & 연구
+            </button>
+          </div>
+        </div>
+
+        <!-- 프로젝트 카드 그리드 -->
+        <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- 카드 1: 스마트 캠퍼스 길찾기 (팀 프로젝트) -->
+          <div class="project-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden group" data-category="project">
+            <div class="h-40 bg-gradient-to-br from-blue-500 to-indigo-600 p-5 flex flex-col justify-between relative overflow-hidden text-white">
+              <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+              <div class="flex justify-between items-start z-10">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md">
+                  팀 프로젝트
+                </span>
+                <span class="text-xs text-white/80 font-mono">2024.03 - 2024.06</span>
+              </div>
+              <div class="z-10 flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-white/10 backdrop-blur-md">
+                  <i data-lucide="map-pin" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xs font-medium bg-emerald-400/90 text-slate-900 px-2 py-0.5 rounded-md font-semibold">최우수상 수상</span>
+              </div>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">
+                  스마트 캠퍼스 길찾기 & 강의실 예약 웹앱
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">
+                  캠퍼스 실내 지도 안내 및 실시간 비어있는 강의실 대여/예약 웹 플랫폼. A* 알고리즘 적용.
+                </p>
+              </div>
+
+              <div>
+                <!-- 태그 -->
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">React</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Node.js</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">MongoDB</span>
+                </div>
+
+                <!-- 링크 버튼 및 모달 열기 -->
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                  <button type="button" class="open-project-modal text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1" data-id="1">
+                    상세보기 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <div class="flex items-center gap-1.5">
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800" title="GitHub">
+                      <i data-lucide="github" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="발표자료 PDF">
+                      <i data-lucide="file-text" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="데모 페이지">
+                      <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 카드 2: 운영체제 가상 메모리 시뮬레이터 (전공 과제) -->
+          <div class="project-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden group" data-category="assignment">
+            <div class="h-40 bg-gradient-to-br from-emerald-500 to-teal-700 p-5 flex flex-col justify-between relative overflow-hidden text-white">
+              <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+              <div class="flex justify-between items-start z-10">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md">
+                  전공 과제
+                </span>
+                <span class="text-xs text-white/80 font-mono">2024.04</span>
+              </div>
+              <div class="z-10 flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-white/10 backdrop-blur-md">
+                  <i data-lucide="cpu" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xs font-medium bg-white/90 text-slate-900 px-2 py-0.5 rounded-md font-semibold">운영체제 A+</span>
+              </div>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition">
+                  운영체제 가상 메모리 시뮬레이터
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">
+                  LRU, FIFO, OPT, LFU 페이지 교체 알고리즘 가시화 및 Page Fault 발생률 성능 분석.
+                </p>
+              </div>
+
+              <div>
+                <!-- 태그 -->
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">C++</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Qt GUI</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Data Structures</span>
+                </div>
+
+                <!-- 링크 버튼 및 모달 열기 -->
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                  <button type="button" class="open-project-modal text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1" data-id="2">
+                    상세보기 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <div class="flex items-center gap-1.5">
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800" title="GitHub">
+                      <i data-lucide="github" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="보고서 Google Drive">
+                      <i data-lucide="file-text" class="w-4 h-4"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 카드 3: 스터디 매칭 플랫폼 (개인 프로젝트) -->
+          <div class="project-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden group" data-category="project">
+            <div class="h-40 bg-gradient-to-br from-indigo-500 to-purple-600 p-5 flex flex-col justify-between relative overflow-hidden text-white">
+              <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+              <div class="flex justify-between items-start z-10">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md">
+                  개인 프로젝트
+                </span>
+                <span class="text-xs text-white/80 font-mono">2024.07 - 2024.08</span>
+              </div>
+              <div class="z-10 flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-white/10 backdrop-blur-md">
+                  <i data-lucide="users" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xs font-medium bg-white/90 text-slate-900 px-2 py-0.5 rounded-md font-semibold">Web App</span>
+              </div>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition">
+                  대학생 스터디 매칭 & 자료 공유 플랫폼
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">
+                  학과 및 관심사별 스터디 모집 및 실시간 채팅, 족보/노트 마크다운 공유 커뮤니티.
+                </p>
+              </div>
+
+              <div>
+                <!-- 태그 -->
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Next.js</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">TypeScript</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Firebase</span>
+                </div>
+
+                <!-- 링크 버튼 및 모달 열기 -->
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                  <button type="button" class="open-project-modal text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1" data-id="3">
+                    상세보기 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <div class="flex items-center gap-1.5">
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800" title="GitHub">
+                      <i data-lucide="github" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://notion.so" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-purple-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="Notion">
+                      <i data-lucide="book-open" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="Live Demo">
+                      <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 카드 4: 네트워크 파일 전송 시스템 (전공 과제) -->
+          <div class="project-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden group" data-category="assignment">
+            <div class="h-40 bg-gradient-to-br from-amber-500 to-orange-600 p-5 flex flex-col justify-between relative overflow-hidden text-white">
+              <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+              <div class="flex justify-between items-start z-10">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md">
+                  전공 과제
+                </span>
+                <span class="text-xs text-white/80 font-mono">2023.11</span>
+              </div>
+              <div class="z-10 flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-white/10 backdrop-blur-md">
+                  <i data-lucide="network" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xs font-medium bg-white/90 text-slate-900 px-2 py-0.5 rounded-md font-semibold">네트워크 프로그래밍</span>
+              </div>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-500 dark:group-hover:text-amber-400 transition">
+                  TCP 소켓 기반 분할 파일 전송 시스템
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">
+                  멀티스레드 기반 패킷 무결성 검증(MD5) 및 대용량 파일 분할 전송 클라이언트/서버 구현.
+                </p>
+              </div>
+
+              <div>
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Python</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">TCP/IP Socket</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Multi-thread</span>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                  <button type="button" class="open-project-modal text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1" data-id="4">
+                    상세보기 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <div class="flex items-center gap-1.5">
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800" title="GitHub">
+                      <i data-lucide="github" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="Google Drive 자료">
+                      <i data-lucide="file-text" class="w-4 h-4"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 카드 5: 알고리즘 풀이 노트 (학습자료) -->
+          <div class="project-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden group" data-category="study">
+            <div class="h-40 bg-gradient-to-br from-purple-500 to-pink-600 p-5 flex flex-col justify-between relative overflow-hidden text-white">
+              <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+              <div class="flex justify-between items-start z-10">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md">
+                  학습자료 & 연구
+                </span>
+                <span class="text-xs text-white/80 font-mono">2023.09 - 진행 중</span>
+              </div>
+              <div class="z-10 flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-white/10 backdrop-blur-md">
+                  <i data-lucide="book-marked" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xs font-medium bg-white/90 text-slate-900 px-2 py-0.5 rounded-md font-semibold">Notion 정리집</span>
+              </div>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-purple-500 dark:group-hover:text-purple-400 transition">
+                  알고리즘 및 코딩테스트 핵심 풀이 노트
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">
+                  백준 골드 및 프로그래머스 레벨 3~4 난이도 150+ 문항 풀이 전략과 패턴 분석.
+                </p>
+              </div>
+
+              <div>
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Notion Docs</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Python</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Problem Solving</span>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                  <button type="button" class="open-project-modal text-xs font-semibold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1" data-id="5">
+                    상세보기 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <div class="flex items-center gap-1.5">
+                    <a href="https://notion.so" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-purple-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="Notion 워크스페이스">
+                      <i data-lucide="book-open" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800" title="GitHub 저장소">
+                      <i data-lucide="github" class="w-4 h-4"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 카드 6: 분실물 이미지 검색 AI (팀 프로젝트) -->
+          <div class="project-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 card-hover overflow-hidden group" data-category="project">
+            <div class="h-40 bg-gradient-to-br from-rose-500 to-pink-600 p-5 flex flex-col justify-between relative overflow-hidden text-white">
+              <div class="absolute -right-4 -bottom-4 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+              <div class="flex justify-between items-start z-10">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md">
+                  팀 프로젝트
+                </span>
+                <span class="text-xs text-white/80 font-mono">2023.09 - 2023.12</span>
+              </div>
+              <div class="z-10 flex items-center gap-3">
+                <div class="p-2.5 rounded-xl bg-white/10 backdrop-blur-md">
+                  <i data-lucide="sparkles" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xs font-medium bg-white/90 text-slate-900 px-2 py-0.5 rounded-md font-semibold">AI / Vision</span>
+              </div>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-rose-500 dark:group-hover:text-rose-400 transition">
+                  머신러닝 기반 캠퍼스 분실물 이미지 검색 AI
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-2">
+                  사진 등록 시 Vision 임베딩 유사도 검색을 통해 습득 공고를 실시간 매칭하는 AI 서비스.
+                </p>
+              </div>
+
+              <div>
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">PyTorch</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">FastAPI</span>
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">ResNet</span>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                  <button type="button" class="open-project-modal text-xs font-semibold text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1" data-id="6">
+                    상세보기 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <div class="flex items-center gap-1.5">
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800" title="GitHub">
+                      <i data-lucide="github" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-500 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="YouTube 시연">
+                      <i data-lucide="video" class="w-4 h-4"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         3. Experience & Skills 섹션 (학력, 활동, 기술 스택)
+         ========================================================================== -->
+    <section id="experience" class="scroll-mt-24 space-y-12">
+      
+      <!-- 섹션 헤더 -->
+      <div class="border-b border-slate-200 dark:border-slate-800 pb-5">
+        <div class="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-xs font-bold tracking-wider uppercase mb-1">
+          <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+          <span>Background & Capabilities</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+          Experience & Skills
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          학업 과정, 동아리 및 학회 활동, 수상 이력과 보유하고 있는 기술 스택입니다.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- 왼쪽: 학력 & 활동 이력 (타임라인) -->
+        <div class="lg:col-span-7 space-y-8">
+          
+          <!-- 학력 (Education) -->
+          <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+              <i data-lucide="school" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+              학력 사항 (Education)
+            </h3>
+            
+            <div class="border-l-2 border-blue-500/30 pl-4 ml-2 space-y-4">
+              <div class="relative">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600 absolute -left-[21px] top-1.5 ring-4 ring-white dark:ring-slate-900"></span>
+                <div class="flex justify-between items-baseline">
+                  <h4 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">한국대학교 정보과학대학</h4>
+                  <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">2022.03 ~ 현재 (재학)</span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-0.5">컴퓨터공학과 3학년 (주전공)</p>
+                <div class="mt-2 text-xs text-slate-500 dark:text-slate-400 space-y-1">
+                  <p>• 총 평점 : <strong>3.92 / 4.5</strong> (전공 평점: 4.10 / 4.5)</p>
+                  <p>• 주요 이수 과목 : 자료구조, 알고리즘, 컴퓨터구조, 운영체제, 컴퓨터네트워크, 데이터베이스, 웹프로그래밍</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 동아리, 학회 및 활동 (Activities & Awards) -->
+          <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-4">
+              <i data-lucide="award" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+              대내외 활동 및 수상 (Activities & Awards)
+            </h3>
+
+            <div class="border-l-2 border-indigo-500/30 pl-4 ml-2 space-y-6">
+              
+              <!-- 활동 1 -->
+              <div class="relative">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 absolute -left-[21px] top-1.5 ring-4 ring-white dark:ring-slate-900"></span>
+                <div class="flex justify-between items-baseline">
+                  <h4 class="font-bold text-slate-900 dark:text-white text-sm">교내 캡스톤 디자인 경진대회 [최우수상]</h4>
+                  <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">2024.06</span>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                  스마트 캠퍼스 길찾기 & 강의실 예약 웹앱 기획 및 풀스택 개발 (팀장 역임)
+                </p>
+              </div>
+
+              <!-- 활동 2 -->
+              <div class="relative">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 absolute -left-[21px] top-1.5 ring-4 ring-white dark:ring-slate-900"></span>
+                <div class="flex justify-between items-baseline">
+                  <h4 class="font-bold text-slate-900 dark:text-white text-sm">교내 중앙 개발 동아리 (DEV-CLUB)</h4>
+                  <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">2023.03 ~ 2024.02</span>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                  웹 프론트엔드 파트원 / 매주 React & Next.js 스터디 및 토이 프로젝트 진행
+                </p>
+              </div>
+
+              <!-- 활동 3 -->
+              <div class="relative">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 absolute -left-[21px] top-1.5 ring-4 ring-white dark:ring-slate-900"></span>
+                <div class="flex justify-between items-baseline">
+                  <h4 class="font-bold text-slate-900 dark:text-white text-sm">Google Developer Student Clubs (GDSC)</h4>
+                  <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">2023.09 ~ 현재</span>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                  클라우드 & 알고리즘 스터디 참여 및 Solution Challenge 준비
+                </p>
+              </div>
+
+              <!-- 활동 4 -->
+              <div class="relative">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 absolute -left-[21px] top-1.5 ring-4 ring-white dark:ring-slate-900"></span>
+                <div class="flex justify-between items-baseline">
+                  <h4 class="font-bold text-slate-900 dark:text-white text-sm">정보처리기능사 / SQLD (SQL개발자) 취득</h4>
+                  <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">2023.12</span>
+                </div>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                  데이터베이스 구조 이해 및 관계형 쿼리 작성 능력 검증
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 오른쪽: 기술 스택 (Skills & Tools) -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i data-lucide="wrench" class="w-5 h-5 text-emerald-600 dark:text-emerald-400"></i>
+              보유 기술 스택 (Tech Stack)
+            </h3>
+
+            <!-- 1. Languages -->
+            <div>
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <i data-lucide="code" class="w-3.5 h-3.5"></i> Programming Languages
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-yellow-400"></span> JavaScript (ES6+)
+                </span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-blue-500"></span> TypeScript
+                </span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-blue-400"></span> Python 3
+                </span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-blue-600"></span> C / C++
+                </span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-orange-500"></span> SQL (MySQL)
+                </span>
+              </div>
+            </div>
+
+            <!-- 2. Frontend & Frameworks -->
+            <div>
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <i data-lucide="layout" class="w-3.5 h-3.5"></i> Frontend & UI
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900/50">React</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900/50">Next.js</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900/50">Tailwind CSS</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900/50">HTML5 / CSS3</span>
+              </div>
+            </div>
+
+            <!-- 3. Backend & Cloud -->
+            <div>
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <i data-lucide="server" class="w-3.5 h-3.5"></i> Backend & Database
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/50">Node.js</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/50">Express</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/50">FastAPI</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/50">Firebase</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/50">MongoDB</span>
+              </div>
+            </div>
+
+            <!-- 4. Tools & Collaboration -->
+            <div>
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <i data-lucide="git-branch" class="w-3.5 h-3.5"></i> Tools & Productivity
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Git & GitHub</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Linux / Bash</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Notion</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Figma</span>
+                <span class="px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">Google Drive</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         4. Contact 섹션 (연락처 및 외부 링크)
+         ========================================================================== -->
+    <section id="contact" class="scroll-mt-24">
+      <div class="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+        
+        <!-- 장식 배경 원 -->
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -left-10 -top-10 w-64 h-64 bg-indigo-400/20 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-3xl mx-auto text-center space-y-6">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold uppercase tracking-wider">
+            <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+            <span>Get in Touch</span>
+          </div>
+
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            함께 성장할 기회를 기다리고 있습니다
+          </h2>
+
+          <p class="text-blue-100 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-light">
+            학습 관련 피드백, 프로젝트 협업 제안, 인턴십 기회 또는 커피챗은 언제든 편하게 연락해 주세요! 확인하는 대로 빠르게 회신드리겠습니다.
+          </p>
+
+          <!-- 이메일 원클릭 복사 카드 -->
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5 max-w-lg mx-auto border border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="mail" class="w-5 h-5 text-white"></i>
+              </div>
+              <div class="text-left">
+                <span class="block text-xs text-blue-200">Official Email</span>
+                <span id="email-address" class="text-sm sm:text-base font-bold font-mono tracking-wide">
+                  hallym.student@gmail.com
+                </span>
+              </div>
+            </div>
+
+            <button type="button" id="copy-email-btn" class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-semibold bg-white text-blue-600 hover:bg-blue-50 transition shadow-sm flex items-center justify-center gap-1.5 flex-shrink-0">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              <span>이메일 복사</span>
+            </button>
+          </div>
+
+          <!-- 소셜 & 외부 링크 채널 그리드 -->
+          <div class="pt-4 flex flex-wrap items-center justify-center gap-3">
+            
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 text-xs font-medium transition flex items-center gap-2">
+              <i data-lucide="github" class="w-4 h-4"></i> GitHub
+            </a>
+
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 text-xs font-medium transition flex items-center gap-2">
+              <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+            </a>
+
+            <a href="https://notion.so" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 text-xs font-medium transition flex items-center gap-2">
+              <i data-lucide="book-open" class="w-4 h-4"></i> Notion 포트폴리오
+            </a>
+
+            <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 text-xs font-medium transition flex items-center gap-2">
+              <i data-lucide="hard-drive" class="w-4 h-4"></i> Google Drive 아카이브
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       하단 푸터 (Footer)
+       ========================================================================== -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 py-8 transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+      
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-700 dark:text-slate-200">김한림 (Kim Hallym)</span>
+        <span>•</span>
+        <span>© 2026 All Rights Reserved.</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <span>Designed with HTML5 & Tailwind CSS</span>
+        <span>•</span>
+        <a href="#profile" class="hover:text-blue-600 dark:hover:text-blue-400 transition">상단으로 이동 ↑</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       플로팅 맨 위로 가기 버튼
+       ========================================================================== -->
+  <button id="back-to-top" class="fixed bottom-6 right-6 p-3 rounded-full bg-blue-600 text-white shadow-xl hover:bg-blue-700 transition duration-300 opacity-0 pointer-events-none translate-y-4 z-30" aria-label="맨 위로 가기">
+    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+  </button>
+
+  <!-- ==========================================================================
+       토스트 알림 (Toast)
+       ========================================================================== -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm font-semibold border border-slate-800 dark:border-slate-200">
+      <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 dark:text-emerald-600 flex-shrink-0"></i>
+      <span id="toast-message">알림 메시지</span>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       프로젝트 상세 보기 모달 (Modal)
+       ========================================================================== -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <!-- 배경 딤 레이어 -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity"></div>
+
+    <!-- 모달 컨텐츠 창 -->
+    <div class="relative bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 z-10 space-y-6">
+      
+      <!-- 닫기 버튼 -->
+      <button type="button" id="modal-close-btn" class="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition" aria-label="모달 닫기">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- 모달 헤더 -->
+      <div class="space-y-2 pr-8">
+        <div class="flex items-center gap-2 text-xs font-semibold">
+          <span id="modal-category" class="px-2.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400">카테고리</span>
+          <span id="modal-date" class="text-slate-400 font-mono">기간</span>
+        </div>
+        <h3 id="modal-title" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+          프로젝트 제목
+        </h3>
+      </div>
+
+      <!-- 사용 기술 태그 -->
+      <div id="modal-tags" class="flex flex-wrap gap-1.5"></div>
+
+      <!-- 프로젝트 설명 -->
+      <div class="space-y-2">
+        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">개요 및 배경</h4>
+        <p id="modal-description" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+      </div>
+
+      <!-- 주요 성과 및 기여점 -->
+      <div class="space-y-2">
+        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">핵심 구현 및 성과</h4>
+        <ul id="modal-highlights" class="space-y-2 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800"></ul>
+      </div>
+
+      <!-- 관련 링크 버튼들 -->
+      <div class="pt-2">
+        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">관련 자료 및 링크</h4>
+        <div id="modal-links" class="flex flex-wrap gap-2"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       이력서 (CV) 모달 & 인쇄 뷰어
+       ========================================================================== -->
+  <div id="resume-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div id="resume-backdrop" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity"></div>
+
+    <div class="relative bg-white dark:bg-slate-900 rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-10 z-10 space-y-8">
+      
+      <!-- 상단 액션 바 -->
+      <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4 no-print">
+        <div class="flex items-center gap-2">
+          <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i>
+          <span class="font-bold text-slate-900 dark:text-white text-base">이력서 미리보기 (Curriculum Vitae)</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="print-resume-btn" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 transition flex items-center gap-1.5">
+            <i data-lucide="printer" class="w-4 h-4"></i> 인쇄 / PDF 저장
+          </button>
+          <button type="button" id="resume-modal-close" class="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 이력서 본문 (A4 규격 친화적 디자인) -->
+      <div class="space-y-6 text-slate-900 dark:text-slate-100">
+        
+        <!-- 이력서 헤더 -->
+        <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+          <h2 class="text-2xl font-black text-slate-900 dark:text-white">김 한 림 (Kim Hallym)</h2>
+          <p class="text-sm text-blue-600 dark:text-blue-400 font-medium mt-1">컴퓨터공학과 학부생 | 프론트엔드 & 시스템 엔지니어 지망</p>
+          <div class="mt-3 flex flex-wrap gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <span>📧 hallym.student@gmail.com</span>
+            <span>📱 010-1234-5678</span>
+            <span>🌐 github.com/username</span>
+          </div>
+        </div>
+
+        <!-- 1. 학력 -->
+        <div>
+          <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">1. 학력 (Education)</h4>
+          <div class="space-y-1">
+            <div class="flex justify-between font-semibold text-sm">
+              <span>한국대학교 컴퓨터공학과</span>
+              <span class="font-mono text-xs">2022.03 ~ 현재 (3학년 재학)</span>
+            </div>
+            <p class="text-xs text-slate-600 dark:text-slate-400">학점: 3.92 / 4.5 (전공 4.10 / 4.5)</p>
+          </div>
+        </div>
+
+        <!-- 2. 주요 프로젝트 -->
+        <div>
+          <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">2. 주요 프로젝트 및 과제</h4>
+          <div class="space-y-3">
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+              <div class="flex justify-between font-semibold text-sm">
+                <span>스마트 캠퍼스 실내 길찾기 & 예약 웹앱</span>
+                <span class="font-mono text-xs text-slate-500">2024.03 ~ 2024.06</span>
+              </div>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">
+                A* 알고리즘을 활용한 강의동 실내 최적 경로 안내 및 강의실 예약 시스템 풀스택 구현 (최우수상)
+              </p>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+              <div class="flex justify-between font-semibold text-sm">
+                <span>운영체제 가상 메모리 페이지 교체 시뮬레이터</span>
+                <span class="font-mono text-xs text-slate-500">2024.04</span>
+              </div>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">
+                LRU, FIFO, OPT, LFU 알고리즘 구현 및 프레임 크기별 Page Fault 실증 비교 벤치마크
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. 보유 기술 -->
+        <div>
+          <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">3. 핵심 기술 (Skills)</h4>
+          <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1">
+            <p>• <strong>Languages:</strong> C/C++, Python, JavaScript (ES6+), TypeScript, SQL</p>
+            <p>• <strong>Frontend / Frameworks:</strong> React, Next.js, HTML5, Tailwind CSS</p>
+            <p>• <strong>Backend & Databases:</strong> Node.js, Express, FastAPI, MySQL, MongoDB, Firebase</p>
+            <p>• <strong>Tools & Systems:</strong> Git, Linux, Docker, Notion, Figma</p>
+          </div>
+        </div>
+
+        <!-- 4. 자격 및 수상 -->
+        <div>
+          <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">4. 자격 및 수상 (Certificates & Awards)</h4>
+          <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-1">
+            <li>• 교내 캡스톤 디자인 경진대회 최우수상 (2024.06)</li>
+            <li>• SQLD (SQL 개발자 자격증) 취득 - 한국데이터산업진흥원 (2023.12)</li>
+            <li>• 정보처리기능사 취득 - 한국산업인력공단 (2022.09)</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript 자체 내장 (단일 파일 배포 지원) -->
+  <script>
+/**
+ * 대학생 개인 웹사이트 인터랙션 및 기능 스크립트
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initMobileMenu();
+  initScrollSpy();
+  initProjectFilter();
+  initProjectModal();
+  initResumeModal();
+  initEmailCopy();
+  initBackToTop();
+  
+  // Lucide Icons 초기화
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+});
+
+/* ==========================================================================
+   1. 테마 모드 제어 (Dark / Light)
+   ========================================================================== */
+function initTheme() {
+  const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn');
+  const userTheme = localStorage.getItem('theme');
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  // 초기 테마 설정
+  if (userTheme === 'dark' || (!userTheme && systemPrefersDark)) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+
+  // 테마 토글 버튼 이벤트
+  themeToggleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      
+      // 아이콘 업데이트
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    });
+  });
+
+  // 시스템 테마 변경 감지
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+      if (e.matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+  });
+}
+
+/* ==========================================================================
+   2. 모바일 메뉴 (Drawer)
+   ========================================================================== */
+function initMobileMenu() {
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (!mobileMenuBtn || !mobileMenu) return;
+
+  mobileMenuBtn.addEventListener('click', () => {
+    const isHidden = mobileMenu.classList.contains('hidden');
+    if (isHidden) {
+      mobileMenu.classList.remove('hidden');
+      mobileMenu.classList.add('flex');
+    } else {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+    }
+  });
+
+  // 링크 클릭 시 모바일 메뉴 자동 닫기
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+    });
+  });
+
+  // 외부 클릭 시 닫기
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && !mobileMenu.classList.contains('hidden')) {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+    }
+  });
+}
+
+/* ==========================================================================
+   3. 스크롤 스파이 (현재 섹션 네비게이션 하이라이트)
+   ========================================================================== */
+function initScrollSpy() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    const scrollY = window.pageYOffset;
+
+    sections.forEach(section => {
+      const sectionHeight = section.offsetHeight;
+      const sectionTop = section.offsetTop - 120;
+      const sectionId = section.getAttribute('id');
+
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        current = sectionId;
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('text-primary-600', 'dark:text-primary-400', 'font-semibold');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('text-primary-600', 'dark:text-primary-400', 'font-semibold');
+      }
+    });
+  });
+}
+
+/* ==========================================================================
+   4. 프로젝트 & 자료 필터링
+   ========================================================================== */
+function initProjectFilter() {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+
+      // 버튼 활성화 스타일 업데이트
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
+        b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+      });
+      btn.classList.add('bg-blue-600', 'text-white', 'shadow-md');
+      btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+
+      // 카드 필터링 처리
+      projectCards.forEach(card => {
+        const category = card.dataset.category;
+        if (filter === 'all' || category === filter) {
+          card.classList.remove('hidden');
+          card.classList.add('flex');
+        } else {
+          card.classList.add('hidden');
+          card.classList.remove('flex');
+        }
+      });
+    });
+  });
+}
+
+/* ==========================================================================
+   5. 프로젝트 상세 모달
+   ========================================================================== */
+// 프로젝트 샘플 데이터
+const projectData = {
+  1: {
+    title: "스마트 캠퍼스 길찾기 & 강의실 예약 웹앱",
+    category: "팀 프로젝트",
+    date: "2024.03 - 2024.06 (1학기)",
+    description: "신입생 및 재학생을 위한 캠퍼스 건물 내 실내 지도 및 비어있는 강의실 실시간 예약 시스템입니다. GPS 및 실내 비콘 연동 기술을 연구하고, 직관적인 UI로 구현하여 학과 캡스톤 디자인 경진대회 최우수상을 수상했습니다.",
+    tags: ["React", "Node.js", "Express", "Tailwind CSS", "MongoDB"],
+    links: {
+      github: "https://github.com",
+      demo: "https://example.com",
+      drive: "https://drive.google.com",
+      notion: "https://notion.so"
+    },
+    highlights: [
+      "반응형 웹 디자인으로 모바일/태블릿/PC 전 기기 완벽 지원",
+      "복잡한 강의동 내부 층별 길찾기 알고리즘 구현 (A* 알고리즘 적용)",
+      "동시 예약 충돌 방지를 위한 트랜잭션 처리 최적화"
+    ]
+  },
+  2: {
+    title: "운영체제 가상 메모리 시뮬레이터",
+    category: "전공 과제",
+    date: "2024.04 (운영체제 전공과목)",
+    description: "운영체제 수업의 핵심 과제로, 페이지 교체 알고리즘(LRU, FIFO, OPT, LFU)의 동작 원리를 가시화하고 페이지 폴트(Page Fault) 발생률을 비교 분석한 시뮬레이션 프로젝트입니다.",
+    tags: ["C++", "Qt", "Data Structures", "Algorithms"],
+    links: {
+      github: "https://github.com",
+      drive: "https://drive.google.com"
+    },
+    highlights: [
+      "LRU, FIFO, OPT 알고리즘별 성능 벤치마크 차트 자동 생성",
+      "메모리 프레임 크기(3~10)에 따른 Belady's Anomaly 현상 실증 분석",
+      "과제 만점(A+) 및 교수님 우수 과제 선정"
+    ]
+  },
+  3: {
+    title: "대학생 스터디 매칭 & 자료 공유 플랫폼",
+    category: "개인 프로젝트",
+    date: "2024.07 - 2024.08 (여름방학)",
+    description: "교내 학생들이 관심사나 전공 스터디원을 손쉽게 모집하고 과제/시험 족보 및 요약 노트를 공유할 수 있는 커뮤니티 플랫폼입니다. Firebase 기반 인증 및 실시간 채팅을 구현했습니다.",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase"],
+    links: {
+      github: "https://github.com",
+      demo: "https://example.com",
+      notion: "https://notion.so"
+    },
+    highlights: [
+      "실시간 스터디 모집 현황 및 필터링 기능 (온/오프라인, 학년, 학과별)",
+      "Firebase Firestore를 활용한 실시간 알림 및 채팅방 구현",
+      "Markdown 에디터 탑재로 학습 자료 포스팅 및 코드 하이라이팅 지원"
+    ]
+  },
+  4: {
+    title: "컴퓨터 네트워크 소켓 기반 파일 전송 시스템",
+    category: "전공 과제",
+    date: "2023.11 (컴퓨터 네트워크)",
+    description: "TCP/IP 소켓 프로그래밍을 활용한 멀티스레드 기반의 안정적인 파일 업로드/다운로드 클라이언트-서버 시스템입니다. 패킷 손실 및 전송 체크섬 검증을 직접 구현했습니다.",
+    tags: ["Python", "Socket", "Multi-threading", "TCP/IP"],
+    links: {
+      github: "https://github.com",
+      drive: "https://drive.google.com"
+    },
+    highlights: [
+      "대용량 파일(1GB+) 분할 스트리밍 전송 및 MD5 무결성 검증",
+      "동시 다중 접속 처리를 위한 스레드 풀 구조 설계",
+      "전송 진행률 표시 및 CLI 프로그레스 바 구현"
+    ]
+  },
+  5: {
+    title: "알고리즘 및 코딩테스트 핵심 풀이 노트",
+    category: "학습자료 & 연구",
+    date: "2023.09 - 진행 중",
+    description: "백준(BOJ) 골드 이상, 프로그래머스 레벨 3~4 난이도의 알고리즘 문제 풀이 및 핵심 테크닉(DP, Dijkstra, Segment Tree, Union-Find 등)을 체계적으로 정리한 Notion 워크스페이스입니다.",
+    tags: ["Algorithm", "Notion", "Python", "Problem Solving"],
+    links: {
+      notion: "https://notion.so",
+      github: "https://github.com"
+    },
+    highlights: [
+      "유형별 문제 150+개 풀이 및 접근 전략 상세 수록",
+      "시간/공간 복잡도 최적화 팁 및 빈출 반례 모음집",
+      "외부 스터디 그룹원 20여 명에게 공유 및 활용 중"
+    ]
+  },
+  6: {
+    title: "머신러닝 기반 캠퍼스 분실물 이미지 검색 AI",
+    category: "팀 프로젝트",
+    date: "2023.09 - 2023.12 (인공지능 실습)",
+    description: "학생들이 캠퍼스에서 잃어버린 물건(지갑, 무선이어폰, 학생증 등) 사진을 올리면 유사한 분실물 습득 공고를 Vision AI 모델이 매칭해주는 서비스 프로토타입입니다.",
+    tags: ["PyTorch", "ResNet", "FastAPI", "React"],
+    links: {
+      github: "https://github.com",
+      drive: "https://drive.google.com",
+      demo: "https://youtube.com"
+    },
+    highlights: [
+      "ResNet50 기반의 특징 벡터 추출 및 코사인 유사도 검색",
+      "FastAPI를 통한 경량 임베딩 서버 구축 및 0.3초 내 검색 결과 반환",
+      "유튜브 데모 시연 영상 및 최종 결과 보고서 완료"
+    ]
+  }
+};
+
+function initProjectModal() {
+  const modal = document.getElementById('project-modal');
+  const modalBackdrop = document.getElementById('modal-backdrop');
+  const modalCloseBtn = document.getElementById('modal-close-btn');
+  const openBtns = document.querySelectorAll('.open-project-modal');
+
+  if (!modal) return;
+
+  function openModal(id) {
+    const data = projectData[id];
+    if (!data) return;
+
+    document.getElementById('modal-title').textContent = data.title;
+    document.getElementById('modal-category').textContent = data.category;
+    document.getElementById('modal-date').textContent = data.date;
+    document.getElementById('modal-description').textContent = data.description;
+
+    // 태그 렌더링
+    const tagsContainer = document.getElementById('modal-tags');
+    tagsContainer.innerHTML = data.tags.map(tag => 
+      `<span class="px-2.5 py-1 text-xs font-medium rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/50">${tag}</span>`
+    ).join('');
+
+    // 핵심 성과 렌더링
+    const highlightsContainer = document.getElementById('modal-highlights');
+    highlightsContainer.innerHTML = data.highlights.map(item => 
+      `<li class="flex items-start text-sm text-slate-600 dark:text-slate-300">
+        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-2 mt-0.5 flex-shrink-0"></i>
+        <span>${item}</span>
+      </li>`
+    ).join('');
+
+    // 링크 버튼들 렌더링
+    const linksContainer = document.getElementById('modal-links');
+    let linksHtml = '';
+    
+    if (data.links.github) {
+      linksHtml += `<a href="${data.links.github}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 transition">
+        <i data-lucide="github" class="w-4 h-4"></i> GitHub 저장소
+      </a>`;
+    }
+    if (data.links.demo) {
+      linksHtml += `<a href="${data.links.demo}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition">
+        <i data-lucide="external-link" class="w-4 h-4"></i> 실시간 데모
+      </a>`;
+    }
+    if (data.links.drive) {
+      linksHtml += `<a href="${data.links.drive}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-amber-600 text-white hover:bg-amber-700 transition">
+        <i data-lucide="file-text" class="w-4 h-4"></i> 발표자료 / 보고서
+      </a>`;
+    }
+    if (data.links.notion) {
+      linksHtml += `<a href="${data.links.notion}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-purple-600 text-white hover:bg-purple-700 transition">
+        <i data-lucide="book-open" class="w-4 h-4"></i> Notion 정리글
+      </a>`;
+    }
+
+    linksContainer.innerHTML = linksHtml;
+
+    // 아이콘 갱신
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  openBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.id;
+      openModal(id);
+    });
+  });
+
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+  if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+}
+
+/* ==========================================================================
+   6. 이력서 (CV) 미리보기 및 인쇄 모달
+   ========================================================================== */
+function initResumeModal() {
+  const resumeModal = document.getElementById('resume-modal');
+  const openResumeBtns = document.querySelectorAll('.open-resume-modal');
+  const closeResumeBtn = document.getElementById('resume-modal-close');
+  const resumeBackdrop = document.getElementById('resume-backdrop');
+  const printResumeBtn = document.getElementById('print-resume-btn');
+
+  if (!resumeModal) return;
+
+  function openResume() {
+    resumeModal.classList.remove('hidden');
+    resumeModal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  function closeResume() {
+    resumeModal.classList.add('hidden');
+    resumeModal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  openResumeBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openResume();
+    });
+  });
+
+  if (closeResumeBtn) closeResumeBtn.addEventListener('click', closeResume);
+  if (resumeBackdrop) resumeBackdrop.addEventListener('click', closeResume);
+  if (printResumeBtn) {
+    printResumeBtn.addEventListener('click', () => {
+      window.print();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !resumeModal.classList.contains('hidden')) {
+      closeResume();
+    }
+  });
+}
+
+/* ==========================================================================
+   7. 이메일 원클릭 복사 및 Toast 알림
+   ========================================================================== */
+function initEmailCopy() {
+  const copyBtn = document.getElementById('copy-email-btn');
+  const emailSpan = document.getElementById('email-address');
+
+  if (!copyBtn || !emailSpan) return;
+
+  copyBtn.addEventListener('click', () => {
+    const email = emailSpan.textContent.trim();
+    navigator.clipboard.writeText(email).then(() => {
+      showToast('이메일 주소가 클립보드에 복사되었습니다! 🎉');
+    }).catch(err => {
+      console.error('클립보드 복사 실패:', err);
+      showToast('이메일 복사에 실패했습니다. 수동으로 복사해주세요.');
+    });
+  });
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  const toastMessage = document.getElementById('toast-message');
+
+  if (!toast || !toastMessage) return;
+
+  toastMessage.textContent = message;
+  toast.classList.remove('translate-y-20', 'opacity-0');
+  toast.classList.add('translate-y-0', 'opacity-100');
+
+  setTimeout(() => {
+    toast.classList.remove('translate-y-0', 'opacity-100');
+    toast.classList.add('translate-y-20', 'opacity-0');
+  }, 3000);
+}
+
+/* ==========================================================================
+   8. 맨 위로 가기 버튼 (Back to top)
+   ========================================================================== */
+function initBackToTop() {
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (!backToTopBtn) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 400) {
+      backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+      backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+    } else {
+      backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+    }
+  });
+
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+  </script>
+</body>
+</html>
+
